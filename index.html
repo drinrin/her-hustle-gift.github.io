@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>To Hannah and Cassy</title>
+<style>
+  * { box-sizing: border-box; }
+  :root { --ink: #fff; --muted: rgba(255,255,255,.8); }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: Arial, Helvetica, sans-serif; color: var(--ink); background: #f4f6f7; }
+  .hero {
+    min-height: 66vh; display: grid; place-items: center; text-align: center;
+    padding: 64px 22px; position: relative; overflow: hidden;
+    background:
+      linear-gradient(180deg, rgba(19,75,101,.30), rgba(10,31,42,.12)),
+      url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2400&q=85") center 48%/cover no-repeat;
+  }
+  .hero:before, .hero:after {
+    content: ""; position: absolute; width: 72vw; height: 72vw;
+    border: 1px solid rgba(255,255,255,.24); transform: rotate(45deg); pointer-events: none;
+  }
+  .hero:before { left: -42vw; top: -43vw; }
+  .hero:after { right: -42vw; top: -43vw; }
+  .hero-content { position: relative; z-index: 1; text-shadow: 0 2px 18px rgba(0,0,0,.16); }
+  h1 { margin: 0 0 12px; font-size: clamp(2.5rem, 6vw, 4.7rem); letter-spacing: -.045em; }
+  .subtitle { margin: 0; color: var(--muted); font-size: 1rem; }
+  .scroll-link {
+    display: inline-grid; place-items: center; margin-top: 28px; width: 54px; height: 54px;
+    border: 1px solid rgba(255,255,255,.75); border-radius: 50%; color: white;
+    text-decoration: none; font-size: 1.5rem; transition: background .2s, transform .2s;
+  }
+  .scroll-link:hover { background: rgba(255,255,255,.18); transform: translateY(3px); }
+  main { color: #263746; padding: 64px 20px 78px; }
+  .gallery-wrap { max-width: 1250px; margin: auto; }
+  .intro { text-align: center; margin: 0 auto 30px; }
+  h2 { font-size: clamp(1.7rem, 4vw, 2.5rem); margin: 0 0 8px; letter-spacing: -.035em; }
+  .intro p { color: #6d7e88; line-height: 1.6; margin: 0; }
+  .collage {
+    columns: 4 220px; column-gap: 14px;
+  }
+  .collage figure {
+    margin: 0 0 14px; break-inside: avoid; overflow: hidden;
+    border-radius: 12px; background: #dfe7eb; box-shadow: 0 6px 22px rgba(35,60,73,.08);
+  }
+  .collage img { width: 100%; height: auto; display: block; transition: transform .35s; }
+  .collage figure:hover img { transform: scale(1.025); }
+  .collage figcaption { padding: 10px 12px; color: #526773; font-size: .85rem; }
+  .empty { border: 1px dashed #b8cbd4; border-radius: 14px; padding: 32px; color: #617681; text-align: center; }
+  footer { background: #edf2f4; text-align: center; padding: 24px; color: #81909a; font-size: .82rem; }
+  @media (max-width: 600px) {
+    .hero { min-height: 62vh; }
+    .collage { columns: 2 140px; column-gap: 9px; }
+    .collage figure { margin-bottom: 9px; border-radius: 9px; }
+  }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-content">
+    <h1>To Hannah and Cassy</h1>
+    <p class="subtitle">Here's a little something for you guys.</p>
+    <ul>
+      <li><a class="scroll-link" href="https://www.youtube.com" aria-label="./heart-solid-full.svg">♡</a></li>
+    </ul>
+    </div>
+</header>
+
+<main id="memories">
+  <section class="gallery-wrap">
+    <div class="intro">
+      <h2>Little moments, big memories</h2>
+      <p>A collage of moments worth keeping.</p>
+    </div>
+    <div class="collage" id="collage"></div>
+  </section>
+</main>
+<footer>Made with love ♡</footer>
+
+<script>
+/*
+  BACKEND / CONTENT SETUP:
+  1. Put your photo files inside the "images" folder beside this index.html file.
+  2. Add each filename below. Keep filenames inside quotes.
+  3. To add a caption, fill in the caption text. Leave it empty for no caption.
+  Example: { src: "images/beach-trip.jpg", caption: "Summer memories" }
+*/
+const photos = [
+  // Replace these example image URLs with your own local files, for example:
+  // { src: "images/photo-01.jpg", caption: "A favourite memory" },
+  // { src: "images/photo-02.jpg", caption: "" },
+
+  // Sample images shown until you add your own:
+  { src: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=85", caption: "" },
+  { src: "https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=900&q=85", caption: "" },
+  { src: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=900&q=85", caption: "" },
+  { src: "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=900&q=85", caption: "" },
+  { src: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=900&q=85", caption: "" },
+  { src: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=900&q=85", caption: "" }
+];
+
+const collage = document.getElementById("collage");
+photos.forEach((photo) => {
+  const figure = document.createElement("figure");
+  const img = document.createElement("img");
+  img.src = photo.src;
+  img.alt = photo.caption || "A memory";
+  img.loading = "lazy";
+  img.onerror = () => figure.remove();
+  figure.appendChild(img);
+  if (photo.caption) {
+    const caption = document.createElement("figcaption");
+    caption.textContent = photo.caption;
+    figure.appendChild(caption);
+  }
+  collage.appendChild(figure);
+});
+if (!collage.children.length) {
+  collage.innerHTML = '<div class="empty">Add your photos to the photos list in index.html to build this collage.</div>';
+}
+</script>
+</body>
+</html>
