@@ -1,1 +1,0 @@
-Place your own photos in this folder, then list their filenames in index.html.
